@@ -1,38 +1,95 @@
-.App {
+.app {
+  margin: 1rem auto;
   text-align: center;
+  width: 50%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  border: 1px solid lightgray;
+  margin: 1rem auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+* {
+  box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+html {
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+table,
+.divTable {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: arial, sans-serif;
+  table-layout: fixed;
+}
+
+.tr {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+tr,
+.tr {
+  width: fit-content;
+  height: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+th,
+.th,
+td,
+.td {
+  border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 2px 4px;
+  text-align: left;
+}
+
+th,
+.th {
+  border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 2px 4px;
+  text-align: left;
+  position: relative;
+}
+
+td,
+.td {
+  height: 30px;
+}
+
+.resizer {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+.resizer.ltr {
+  right: 0;
+}
+
+.resizer.rtl {
+  left: 0;
+}
+
+.resizer.isResizing {
+  background: blue;
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .resizer {
+    opacity: 0;
   }
-  to {
-    transform: rotate(360deg);
+
+  *:hover > .resizer {
+    opacity: 1;
   }
 }
