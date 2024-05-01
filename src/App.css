@@ -44,6 +44,7 @@ td,
   border-right: 1px solid lightgray;
   padding: 2px 4px;
   text-align: left;
+  background-color: white;
 }
 
 th,
@@ -53,6 +54,7 @@ th,
   padding: 2px 4px;
   text-align: left;
   position: relative;
+  background-color: white;
 }
 
 td,

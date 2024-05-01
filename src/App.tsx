@@ -142,53 +142,63 @@ function App() {
                     style={{ display: 'flex', width: '100%' }}
                   >
                     {/* Render the left-pinned column */}
-                    {columnPinning?.left?.map((pin) => {
-                      const header = headerGroup.headers.find(
-                        (h) => h.id === pin
+                    {columnPinning?.left
+                      ?.filter(
+                        (pin) =>
+                          !virtualColumns.some(
+                            (vc) =>
+                              vc.index ===
+                              headerGroup.headers.findIndex((h) => h.id === pin)
+                          )
                       )
-                      return header ? (
-                        <th
-                          key={header.id}
-                          style={{
-                            display: 'flex',
-                            width: header.getSize(),
-                            ...getCommonPinningStyles(header.column),
-                          }}
-                        >
-                          <div
-                            {...{
-                              className: header.column.getCanSort()
-                                ? 'cursor-pointer select-none'
-                                : '',
-                              onClick: header.column.getToggleSortingHandler(),
+                      ?.map((pin) => {
+                        const header = headerGroup.headers.find(
+                          (h) => h.id === pin
+                        )
+                        return header ? (
+                          <th
+                            key={header.id}
+                            style={{
+                              display: 'flex',
+                              width: header.getSize(),
+                              ...getCommonPinningStyles(header.column),
                             }}
                           >
-                            {flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                            {{
-                              asc: ' 🔼',
-                              desc: ' 🔽',
-                            }[header.column.getIsSorted() as string] ?? null}
-                          </div>
-                          <div
-                            {...{
-                              onDoubleClick: () => header.column.resetSize(),
-                              onMouseDown: header.getResizeHandler(),
-                              onTouchStart: header.getResizeHandler(),
-                              className: `resizer ${
-                                table.options.columnResizeDirection
-                              } ${
-                                header.column.getIsResizing()
-                                  ? 'isResizing'
-                                  : ''
-                              }`,
-                            }}
-                          />
-                        </th>
-                      ) : null
-                    })}
+                            <div
+                              {...{
+                                className: header.column.getCanSort()
+                                  ? 'cursor-pointer select-none'
+                                  : '',
+                                onClick:
+                                  header.column.getToggleSortingHandler(),
+                              }}
+                            >
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                              {{
+                                asc: ' 🔼',
+                                desc: ' 🔽',
+                              }[header.column.getIsSorted() as string] ?? null}
+                            </div>
+                            <div
+                              {...{
+                                onDoubleClick: () => header.column.resetSize(),
+                                onMouseDown: header.getResizeHandler(),
+                                onTouchStart: header.getResizeHandler(),
+                                className: `resizer ${
+                                  table.options.columnResizeDirection
+                                } ${
+                                  header.column.getIsResizing()
+                                    ? 'isResizing'
+                                    : ''
+                                }`,
+                              }}
+                            />
+                          </th>
+                        ) : null
+                      })}
 
                     {/* Render the virtualized columns */}
                     {virtualPaddingLeft ? (
@@ -273,26 +283,37 @@ function App() {
                       }}
                     >
                       {/* Render the left-pinned column cells */}
-                      {columnPinning?.left?.map((pin) => {
-                        const cell = visibleCells.find(
-                          (c) => c.column.id === pin
+                      {columnPinning?.left
+                        ?.filter(
+                          (pin) =>
+                            !virtualColumns.some(
+                              (vc) =>
+                                vc.index ===
+                                visibleCells.findIndex(
+                                  (c) => c.column.id === pin
+                                )
+                            )
                         )
-                        return cell ? (
-                          <td
-                            key={cell.id}
-                            style={{
-                              display: 'flex',
-                              width: cell.column.getSize(),
-                              ...getCommonPinningStyles(cell.column),
-                            }}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </td>
-                        ) : null
-                      })}
+                        ?.map((pin) => {
+                          const cell = visibleCells.find(
+                            (c) => c.column.id === pin
+                          )
+                          return cell ? (
+                            <td
+                              key={cell.id}
+                              style={{
+                                display: 'flex',
+                                width: cell.column.getSize(),
+                                ...getCommonPinningStyles(cell.column),
+                              }}
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </td>
+                          ) : null
+                        })}
 
                       {/* Render the virtualized cells */}
                       {virtualPaddingLeft ? (
